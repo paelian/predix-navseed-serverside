@@ -1,0 +1,10 @@
+---
+applications:
+  - name: px-replacethisnamenow
+    memory: 128M
+    timeout: 180
+    buildpack: nodejs_buildpack
+    command: node server/app.js
+env:
+    node_env: cloud
+
