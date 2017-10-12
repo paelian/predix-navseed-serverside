@@ -1,0 +1,78 @@
+<style>
+    div#ajaxDemo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 350px;
+        height: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    div.divButton {
+        width: 80px;
+        height: 35px;
+        padding-top: 3px;
+        border: 1px solid #ccc;
+        text-align: center;
+        cursor: pointer;
+        -webkit-box-shadow: 5px 3px 8px 0px rgba(153, 153, 153, 1);
+        -moz-box-shadow: 5px 3px 8px 0px rgba(153, 153, 153, 1);
+        box-shadow: 5px 3px 8px 0px rgba(153, 153, 153, 1);
+    }
+
+    div.divButton:hover {
+        background-color: #aff;
+    }
+</style>
+
+
+
+<div id="mainContainer" class="centered">
+    this is the ajax testing page
+
+    <div id="ajaxDemo">
+        <div id="btnJqueryAjax" class="divButton">jQuery GET</div>
+        <div id="btnIronAjax" class="divButton">Iron-Ajax GET</div>
+    </div>
+
+
+</div>
+
+<iron-ajax  
+    id="ironGetModels" 
+    handle-as="json">
+</iron-ajax>
+
+<script>
+    var getUrl = "https://asset-builder-services.run.aws-usw02-pr.ice.predix.io/model";
+
+    var btnIronAjaxClick = function () {
+        console.log("Iron Ajax clicked");
+
+        $("#ironGetModels")[0].url = getUrl;
+        var promise = $("#ironGetModels")[0].generateRequest().completes;
+        promise.then(rtn => {
+            console.log("iron ajax results", rtn.response);
+        });
+        
+    };
+
+    var btnJqueryAjax = function () {
+        console.log("jQuery clicked");
+
+        $.when(ajax_get(getUrl)).done(rtn => {
+            console.log("value returned is", rtn);
+        });
+    };
+
+    var subMain = () => {
+        console.log("ajax testing init message");
+
+        $("div#btnJqueryAjax").click(btnJqueryAjax);
+        $("div#btnIronAjax").click(btnIronAjaxClick);
+    };
+
+</script>

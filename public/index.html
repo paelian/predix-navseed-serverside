@@ -12,10 +12,6 @@
     <link rel="import" href="./bower_components/px-app-helpers/px-app-header/px-app-header.html" />
     <link rel="import" href="./bower_components/px-app-nav/px-app-nav.html" />
     <link rel="import" href="./bower_components/px-theme/px-theme-styles.html">
-    <link rel="import" href="./elements/ptchronos-landing-view.html" />
-    <link rel="import" href="./elements/ptchronos-line1-view.html" />
-    <link rel="import" href="./elements/ptchronos-line2-view.html" />
-    <link rel="import" href="./elements/seed-app-styles.html" />
 
     <!-- <link rel="import" href="../bower_components/dashboard-toolbar/dashboard-toolbar.html">
     <link rel="import" href="bower_components/pxa-svgdashboard/pxa-svgdashboard.html"> -->
@@ -23,6 +19,8 @@
     <!-- Add some iron icons to override the px icon set -->
     <link rel="import" href="./bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="./bower_components/iron-icons/maps-icons.html">
+
+    <link rel="import" href="./bower_components/iron-ajax/iron-ajax.html">    
 
     <style include="px-theme-styles" is="custom-style"></style>
     <link href="./bower_components/noty/lib/noty.css" rel="stylesheet">
@@ -47,7 +45,7 @@
             visibility: hidden;
         }
     </style>
-        
+
 </head>
 
 
@@ -71,8 +69,8 @@
         //     ["runtime", { "label": "Runtime", "id": "runtime", "icon": "maps:directions-run", "qry": "page?page=_runtime.html" }]
         // ]);
         var navData = new Map([
-            ["landing", { "label": "Home", "id": "landing", "icon": "icons:home", "qry": "page?page=_ptcronos-landing.html" }],
-            ["scheduling", { "label": "Scheduling", "id": "scheduling", "icon": "icons:watch-later", "qry": "page?page=_scheduling.html" }]
+            ["landing", { "label": "Home", "id": "landing", "icon": "icons:home", "qry": "page?page=_ajax-testing.html" }],
+            ["scheduling", { "label": "Scheduling", "id": "scheduling", "icon": "icons:watch-later", "qry": "page?page=_page2.html" }]
         ]);
 
         var subMain = null;

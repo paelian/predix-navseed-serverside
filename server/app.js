@@ -95,6 +95,5 @@ app.use(function (err, req, res, next) {
 httpServer.listen(process.env.VCAP_APP_PORT || process.env.PORT || 5000, function () {
   console.log('Server started on port: ' + httpServer.address().port);
 });
-//Add custom routes
-require('./routes')(app);
+
 module.exports = app;

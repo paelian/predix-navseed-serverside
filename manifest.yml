@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: px-replacethisnamenow
+  - name: pxa-navseed-demo
     memory: 128M
     timeout: 180
     buildpack: nodejs_buildpack
