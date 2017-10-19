@@ -4,31 +4,29 @@ var BaseController = require('./baseController');
 var rp = require('request-promise');
 
 var TokenClientController = class extends BaseController {
-    constructor(uaaUrl, uid, pwd) {
+    constructor(uaauri, credentials) {
         super();
-        this.isSubclass = true;
 
-        this.UAAUrl = uaaUrl;
-        this.Uid = uid;
-        this.Pwd = pwd;
+        this.UAAUri = uaauri;
+        this.Cred = credentials;
         this.lastToken = null;
     }
 
     refreshToken() {
         var _self = this;
         var options = {
-            uri: this.UAAUrl + '/oauth/token',
+            uri: this.UAAUri + '/oauth/token',
             qs: {
                 grant_type: 'client_credentials'
             },
             headers: {
-                "Authorization": "Basic " + new Buffer(this.Uid + ':' + this.Pwd).toString('base64')
+                "Authorization": "Basic " + _self.Cred
             },
             json: true
         };
 
         return new Promise((resolve, reject) => {
-            if (_self.UAAUrl.length === 0) {
+            if (_self.UAAUri.length === 0) {
                 resolve('');
                 return;
             }
@@ -44,21 +42,26 @@ var TokenClientController = class extends BaseController {
                 this.lastToken = data;
                 this.lastToken.retrieved_on = timestamp;
                 resolve(this.lastToken.access_token);
+            }).catch(err => {
+                reject(err);
             });
 
         });
 
     }
-    getRequest(url) {
+    getRequest(url, zoneId) {
         return new Promise((resolve, reject) => {
             this.refreshToken().then(token => {
                 var options = {
                     uri: url,
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json;;charSet=utf-8"
                     },
                     json: true
                 };
+                if (typeof zoneId === 'string') {
+                    options.headers["Predix-Zone-Id"] = zoneId;
+                }
                 if (token !== '') {
                     options.headers.Authorization = "bearer " + token;
                 }
@@ -66,13 +69,16 @@ var TokenClientController = class extends BaseController {
                     resolve(rtn);
                 })
                 .catch(err => {
-                    reject(err);
+                    reject({ statusCode: err.statusCode, results: Models.PxaResults.err(err.error.error_description, err) });
+                    // reject(err);
                 });
+            }).catch(err => {
+                reject({ statusCode: err.statusCode, results: Models.PxaResults.err(err.error.error_description, err) });
             });
         });
     }
 
-    postRequest(url, data) {
+    postRequest(url, data, zoneId) {
         return new Promise((resolve, reject) => {
             this.refreshToken().then(token => {
                 var options = {
@@ -84,6 +90,9 @@ var TokenClientController = class extends BaseController {
                     body: data,
                     json: true
                 };
+                if (typeof zoneId === 'string') {
+                    options.headers["Predix-Zone-Id"] = zoneId;
+                }
                 if (token !== '') {
                     options.headers.Authorization = "bearer " + token;
                 }
@@ -91,11 +100,75 @@ var TokenClientController = class extends BaseController {
                     resolve(rtn);
                 })
                 .catch(err => {
-                    reject(err);
+                    reject({ statusCode: err.statusCode, results: Models.PxaResults.err(err.error.error_description, err) });
+                    // reject(err);
                 });
+            }).catch(err => {
+                reject({ statusCode: err.statusCode, results: Models.PxaResults.err(err.error.error_description, err) });
             });
         });
     }
+
+    putRequest(url, data, zoneId) {
+        return new Promise((resolve, reject) => {
+            this.refreshToken().then(token => {
+                var options = {
+                    method: 'PUT',
+                    uri: url,
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8"
+                    },
+                    body: data,
+                    json: true
+                };
+                if (typeof zoneId === 'string') {
+                    options.headers["Predix-Zone-Id"] = zoneId;
+                }
+                if (token !== '') {
+                    options.headers.Authorization = "bearer " + token;
+                }
+                rp(options).then(rtn => {
+                    resolve(rtn);
+                })
+                .catch(err => {
+                    reject({ statusCode: err.statusCode, results: Models.PxaResults.err(err.error.error_description, err) });
+                    // reject(err);
+                });
+            }).catch(err => {
+                reject({ statusCode: err.statusCode, results: Models.PxaResults.err(err.error.error_description, err) });
+            });
+        });
+    }
+
+    deleteRequest(url, data, zoneId) {
+        return new Promise((resolve, reject) => {
+            this.refreshToken().then(token => {
+                var options = {
+                    method: 'DELETE',
+                    uri: url,
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8"
+                    }
+                };
+                if (typeof zoneId === 'string') {
+                    options.headers["Predix-Zone-Id"] = zoneId;
+                }
+                if (token !== '') {
+                    options.headers.Authorization = "bearer " + token;
+                }
+                rp(options).then(rtn => {
+                    resolve(rtn);
+                })
+                .catch(err => {
+                    reject({ statusCode: err.statusCode, results: Models.PxaResults.err(err.error.error_description, err) });
+                    // reject(err);
+                });
+            }).catch(err => {
+                reject({ statusCode: err.statusCode, results: Models.PxaResults.err(err.error.error_description, err) });
+            });
+        });
+    }
+
 
 };
 

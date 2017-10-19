@@ -18,6 +18,17 @@ global.Models = {
   
 };
 
+// Service Configuration
+// ** The cf.json is extracted from the `cf env` used to gather details of
+//  a service bound to a test application (details provided are not strictly valid JSON;
+//  the details are formatted and placed into cf.json as shown in this seed - refer to attached
+//  cf.json file)
+var serviceConfiguration = require('./cf.json').VCAP_SERVICES;
+var PxServiceConfiguration = require('./model/PxServiceConfiguration');
+var predixConfig = {
+  uaa: new PxServiceConfiguration(serviceConfiguration["predix-uaa"][0]),
+  asset: new PxServiceConfiguration(serviceConfiguration["predix-asset"][0])
+}
 
 /**********************************************************************
        SETTING UP EXRESS SERVER
@@ -53,7 +64,7 @@ app.use(express.static(path.join(__dirname, process.env['base-dir'] ? process.en
 fs.readdirSync('./server/controllers').forEach(function (file) {
   if (file.substr(-9) === 'Router.js') {
     var rname = file.replace(file.substr(-3), '').replace('Router', '');
-    var route = require('./controllers/' + file)({});
+    var route = require('./controllers/' + file)(predixConfig);
     app.use('/' + rname, route);
   }
 });
