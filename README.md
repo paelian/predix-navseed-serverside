@@ -1,16 +1,15 @@
 # Quick start - Predix UI Development in NodeJS for Professional Services
 
-## Contents
+### Contents
 
 1. [Software Needed](#software-needed)
 2. [Example Service - Predix Asset and UAA](#example-services)
 3. [The Simplified UI 'navseed' Application](#navseed)
 4. [Additonal Resources](additional-resources)
 
-***
 
 
-## Assumptions
+### Assumptions
 
   * a predix.io account has been obtained by the reader
   * all relevant credentials to specific workspaces have been given to the reader's predix.io account
@@ -40,7 +39,19 @@ __Recommended__
 <a name="example-services"></a>
 ## 2. Example Service - Predix Asset and UAA
 
-(A guide on how to stand up a UAA and Asset instance for use in step 3)
+In order to better understand the mechanics of how the navseed starter application functions with Predix services, it helps to have a service to leverage; to this end, this section deals with how to quickly set up a sample development environment with Predix Asset and UAA (user access) services.
+
+### Create UAA Service Instance
+
+Begin by logging in to predix.io using previously-obtained credentials, and access your dev space. Go to the "Service Instances" tab and click the view catalog link.
+
+<img src="/README.img/README$20(2).png" alt="Browse service catalog" />
+
+Select "User Account and Authentication". For the purposes of this demonstration, select the 'Free' plan and click the subscribe button.
+
+![alt text](/README.img/README%20(3).png "Select 'User Account and Authentication'")
+
+
 
 ***
 
