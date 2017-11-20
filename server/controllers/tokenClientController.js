@@ -49,7 +49,9 @@ var TokenClientController = class extends BaseController {
         });
 
     }
-    getRequest(url, zoneId) {
+    getRequest(url, zoneId) { // <-- ...(2). This method uses teh cf.json config to either request a new token via 'refreshToken',
+                              //        or re-uses the last token if not expired. The method then constructs the primary GET
+                              //        request and returns the async request via promise down the callstack (3 cont)
         return new Promise((resolve, reject) => {
             this.refreshToken().then(token => {
                 var options = {

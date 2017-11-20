@@ -27,6 +27,7 @@
   "resolutions": {
     "app-localize-behavior": "^1.0.0",
     "iron-resizable-behavior": "^2.0.0",
-    "px-vis": "^4.0.0"
+    "px-vis": "^4.0.0",
+    "webcomponentsjs": "^0.7.24"
   }
 }

@@ -14,10 +14,11 @@ var PxServiceController = class extends TokenClientController {
         this.svcZone = svczone;
     }
 
-    read(req, res, next) {
+    read(req, res, next) { // <-- ...(1)
         var _self = this;
         var path = req.query.path || '';
-        return _self.getRequest(_self.svcUri + path, _self.svcZone);
+        return _self.getRequest(_self.svcUri + path, _self.svcZone); // <-- ...then the method 'getRequest' is invoked on the
+                                                                     //     token controller (2 cont)
     }
 
     create(req, res, path) {
