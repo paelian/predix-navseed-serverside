@@ -105,7 +105,7 @@ The Predix simplified navseed application is located [here](https://github.com/p
 
 ### Architecture
 
-The simplified application, called 'navseed' due to the inclusion and example implementation of the Predix-UI control [px-app-nav](https://www.predix-ui.com/#/elements/px-app-nav), provides a very light starting point for Predix UI development. While there are still some server-side features present similar to what you might find in other seed apps, some effort has been given to reorganize these features to follow a typical MVC pattern.
+The simplified application, called 'navseed' due to the example implementation of the Predix-UI control [px-app-nav](https://www.predix-ui.com/#/elements/px-app-nav), provides a very light starting point for Predix UI development. While there are still some server-side features present similar to what you might find in other seed apps, some effort has been given to reorganize these features to follow a typical MVC pattern.
 
 #### Server Side
 
