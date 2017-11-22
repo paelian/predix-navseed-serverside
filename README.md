@@ -93,7 +93,7 @@ Once you click the "Save" button to create the client ID, select the new ID back
 
 ![alt text](/README.img/README%20(17).png "Assign asset service instance access to client ID")
 
-Your Predix Asset service instance and UAA service instace are ready for use with the navseed application!
+Your Predix Asset service instance and UAA service instance are ready for use with the navseed application!
 
 ***
 
@@ -107,7 +107,26 @@ The Predix simplified navseed application is located [here](https://github.com/p
 
 The simplified application, called 'navseed' due to the inclusion and example implementation of the Predix-UI control [px-app-nav](https://www.predix-ui.com/#/elements/px-app-nav), provides a very light starting point for Predix UI development. While there are still some server-side features present similar to what you might find in other seed apps, some effort has been given to reorganize these features to follow a typical MVC pattern.
 
-(more architecture details forthcoming)
+#### Server Side
+
+For the most part, the navseed application follows what most developers would consider a standard express NodeJS application: there is a server/app.js file that manages the setup and execution cycle of the web server, including routes, sessions, and other server side features.
+
+The application makes use of an auto-routing snippet built in to the "app.js" file, where .js files suffixed with "Router.js" present in the `/server/controllers` subfolder are themselves registered as routes.
+
+![alt text](/README.img/README%20(4).png "Auto-routing for Express in app.js")
+
+These route files must export a function wrapping an implementation of a class derived from `BaseController`. An example, "pageRouter.js" specific to the next section about browser-side features, is shown below.
+
+![alt text](/README.img/README%20(44).png "pageRouter.js")
+
+In this example, you can see the `PageController` class derives from `BaseController`, and provides methods that are called from the wrapping function `routerMain`. `routerMain` in turn provides Express with the routing relative to the name prefix of the file, in this case `/page`. Thus, when a GET request is made from `<uri>/page/`, the route shown will pass the request to the `getPage` method in the implemented controller.
+
+(more forthcoming)
+
+#### Browser Side
+
+(more forthcoming)
+
 
 ### Wiring Up Predix Asset
 
@@ -153,7 +172,7 @@ Next step is to add the client credentials for predix-asset and for predix-uaa. 
 
 ![alt text](/README.img/README%20(31).png "Add client credentials to cf.json 2")
 
-*Author's note: It should definitely be mentioned at this point that there are other ways to encrypt these credentials so as not to make them quite so obvious (base64). Once the application is more fully developed, this would certainly be a recommended step. For the time being however, it is outside the scope of this document, as the intent of this document is to provide only a place to start building your application. I have found it more useful to keep the configuration details intact and exposed during development so I had a easy point of reference and could respond to changes immediately if required. Also, if you have to switch tasks for an extended period of time during development, it is helpful to have everything written down!*
+*Author's note: It should definitely be mentioned at this point that there are ways to encrypt these credentials so as not to make them quite so obvious (base64). Once the application is more fully developed, this would certainly be a recommended step. For the time being however, it is outside the scope of this document, as the intent of this document is to provide only a place to start building your application. I have found it more useful to keep the configuration details intact and exposed during development so I had an easy point of reference and could respond to changes immediately if required. Also, if you have to switch tasks for an extended period of time during development, it is helpful to have everything written down!*
 
 (more forthcoming)
 
@@ -170,7 +189,7 @@ Next step is to add the client credentials for predix-asset and for predix-uaa. 
 <a name="additional-resources"></a>
 ## 4. Additional Resources
 
- * [Predix-ui](https://www.predix-ui.com). Locate and use many different Predix UI via this site; components are installed via `bower install px-<desired-controlId-here>` from the console in the root of the navseed application.
+ * [Predix-ui](https://www.predix-ui.com). Locate and use many different Predix UI polymer controls via this site; components are installed via `bower install px-<desired-controlId-here>` (add `--save` to save the control as a dependency to the bower.json file) from the console in the root of the navseed application.
  * [gulp](https://gulpjs.com/). Gulp is a powerful task runner that can watch your application code for changes as you make them, restarting the node server thread as needed. It is also used to package the application into a distribution folder for easy uploading to Predix CF.
 
 
