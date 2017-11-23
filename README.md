@@ -111,7 +111,7 @@ The simplified application, called 'navseed' due to the example implementation o
 
 For the most part, the navseed application follows what most developers would consider a standard express NodeJS application: there is a server/app.js file that manages the setup and execution cycle of the web server, including routes, sessions, and other server side features.
 
-The application makes use of an auto-routing snippet built in to the "app.js" file, where .js files suffixed with "Router.js" present in the `/server/controllers` subfolder are themselves registered as routes.
+This application makes use of an auto-routing snippet built in to the "app.js" file, where .js files suffixed with "Router.js" present in the `/server/controllers` subfolder are themselves registered as routes.
 
 ![alt text](/README.img/README%20(4).png "Auto-routing for Express in app.js")
 
@@ -119,9 +119,12 @@ These route files must export a function wrapping an implementation of a class d
 
 ![alt text](/README.img/README%20(44).png "pageRouter.js")
 
-In this example, you can see the `PageController` class derives from `BaseController`, and provides methods that are called from the wrapping function `routerMain`. `routerMain` in turn provides Express with the routing relative to the name prefix of the file, in this case `/page`. Thus, when a GET request is made from `<uri>/page/`, the route shown will pass the request to the `getPage` method in the implemented controller.
+In this example, you can see the `PageController` class derives from `BaseController`, and provides methods that are called from the wrapping function `routerMain`. `routerMain` in turn provides Express with the routing relative to the name prefix of the file, in this case `/page`. Thus, when a GET request is made to `<uri>/page/`, the route shown passes the request to the `getPage` method in the implemented controller.
 
-(more forthcoming)
+##### *TokenClientController* Class
+
+Included in this seed application is a controller subclass that simplifies the token authentication/request process, allowing a more straightforward implementation of Predix services. The class, located in `/server/controllers/tokenClientController.js`, leverages information about the UAA service collected from `cf env <app-name>` and saved to `/server/cf.json` (see the next section "Wiring Up Predix Asset" for more details), building in a "refreshToken" method to derived requests. An example on how to correctly use this class is also included; `pxServiceController.js/PxServiceController`, subclassed from `TokenClientController`, has some simple CRUD methods that form the basis of our `assetRouter.js/AssetController` Predix Asset wire-up later in this document.
+
 
 #### Browser Side
 
