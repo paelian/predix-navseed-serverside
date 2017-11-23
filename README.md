@@ -125,11 +125,15 @@ In this example, you can see the `PageController` class derives from `BaseContro
 
 Included in this seed application is a controller subclass that simplifies the token authentication/request process, allowing a more straightforward implementation of Predix services. The class, located in `/server/controllers/tokenClientController.js`, leverages information about the UAA service collected from `cf env <app-name>` and saved to `/server/cf.json` (see the next section "Wiring Up Predix Asset" for more details), building in a "refreshToken" method to derived requests. An example on how to correctly use this class is also included; `pxServiceController.js/PxServiceController`, subclassed from `TokenClientController`, has some simple CRUD methods that form the basis of our `assetRouter.js/AssetController` Predix Asset wire-up later in this document.
 
-
 #### Browser Side
 
-(more forthcoming)
+The basic Predix UI seed recommended by [Predix-UI website](https://www.predix-ui.com) makes use of polymer-based routing, all done client-side. While there is nothing wrong with doing this, it can be sometimes harder to follow than, say, server-side routing. As an alternative, this seed application implements a very simple server-side "pageRouter", where the contents of an HTML page can be requested via GET from the browser, and a matching HTML file located in `/public/views` is located and read in, and the contents returned in a JSON package.
 
+An example of how this could start to be used is included in the main `/public/index.html` file's navigation.
+
+![alt text](/README.img/README%20(45).png "pageRouter example usage")
+
+This concept can be greatly expanded upon to include some kind of view-controller scaffolding arrangement, or even server-side directive processing, similar to how ASP.Net or other popular web servers implement server-based MVC.
 
 ### Wiring Up Predix Asset
 
